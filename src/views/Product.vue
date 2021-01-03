@@ -12,7 +12,7 @@
               <el-input v-model="form.title" placeholder="电影名称" />
             </el-form-item>
             <el-form-item label="电影类别">
-              <el-select v-model="form.genre" placeholder="请选择">
+              <el-select v-model="form.genre" multiple placeholder="请选择">
                 <el-option
                   v-for="item in genre_options"
                   :key="item"

@@ -86,7 +86,7 @@ export const constantRoutes = [
       {
         path: 'relation',
         component: () => import('@/views/Actor.vue'),
-        meta: { title: '演员/导演查询', icon: 'table' }
+        meta: { title: '合作关系查询', icon: 'table' }
       },
     ]
   },
