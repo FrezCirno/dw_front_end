@@ -5,6 +5,9 @@
       <div class="content">
         <div class="myform">
           <el-form ref="form" :model="form" label-width="150px">
+            <el-form-item label="电影id">
+              <el-input v-model="form.asin" placeholder="电影id" />
+            </el-form-item>
             <el-form-item label="电影名称">
               <el-input v-model="form.title" placeholder="电影名称" />
             </el-form-item>
@@ -116,7 +119,7 @@
 </template>
 
 <script>
-import { mysql_query, neo4j_query } from "@/api/movie";
+import { combine_query } from "@/api/movie";
 import Time from "@/components/Time.vue";
 
 export default {
@@ -193,6 +196,7 @@ export default {
         30,
       ],
       form: {
+        asin: "",
         title: "",
         date: "",
         director: "",
@@ -223,6 +227,7 @@ export default {
     fetchData() {
       this.listLoading = true;
       let params = {};
+      if (this.form.asin) params["asin"] = this.form.asin;
       if (this.form.title) params["title"] = this.form.title;
       if (this.form.director) params["director"] = this.form.director;
       if (this.form.actor) params["actor"] = this.form.actor;
@@ -234,9 +239,14 @@ export default {
       if (this.form.m) params["m"] = this.form.m;
       if (this.form.d) params["d"] = this.form.d;
       if (this.form.weekday) params["weekday"] = this.form.weekday;
-      mysql_query(params).then((response) => {
+      combine_query(params).then((response) => {
         this.count = response.data.count;
         this.movieData = response.data.data;
+        this.dbtime = {
+          mysql: response.data.mysql,
+          neo4j: response.data.neo4j,
+          hive: response.data.hive,
+        };
         this.listLoading = false;
       });
     },
