@@ -64,19 +64,9 @@
 </template>
 
 <script>
-import { mysql_query, neo4j_query } from "@/api/movie";
+import { neo4j_relation } from "@/api/movie";
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger",
-      };
-      return statusMap[status];
-    },
-  },
   data() {
     return {
       list: null,
@@ -119,23 +109,26 @@ export default {
       form: {
         director: "",
         actor: "",
+        support_actor: "",
       },
       movieData: [],
     };
   },
   methods: {
+    reset() {
+      this.listLoading = false;
+    },
     submit() {
       this.fetchData();
     },
     fetchData() {
       this.listLoading = true;
       let params = {};
-      if (this.form.title) params["title"] = this.form.title;
       if (this.form.director) params["director"] = this.form.director;
       if (this.form.actor) params["actor"] = this.form.actor;
-      if (this.form.genre) params["genre"] = this.form.genre;
-      if (this.form.title) params["title"] = this.form.title;
-      mysql_query(params).then((response) => {
+      if (this.form.support_actor)
+        params["support_actor"] = this.form.support_actor;
+      neo4j_relation(params).then((response) => {
         this.movieData = response.data.data;
         this.listLoading = false;
       });

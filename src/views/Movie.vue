@@ -5,62 +5,8 @@
       <div class="content">
         <div class="myform">
           <el-form ref="form" :model="form" label-width="150px">
-            <el-form-item label="电影id">
-              <el-input v-model="form.asin" placeholder="电影id" />
-            </el-form-item>
             <el-form-item label="电影名称">
               <el-input v-model="form.title" placeholder="电影名称" />
-            </el-form-item>
-            <el-form-item label="电影类别">
-              <el-select v-model="form.genre" placeholder="请选择">
-                <el-option
-                  v-for="item in genre_options"
-                  :key="item"
-                  :label="item"
-                  :value="item"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="上映时间(年月日)">
-              <el-date-picker v-model="form.y" type="year" />
-              <el-select v-model="form.m" placeholder="月">
-                <el-option
-                  v-for="i in month_options"
-                  :key="i"
-                  :label="i"
-                  :value="i"
-                />
-              </el-select>
-              <el-select v-model="form.d" placeholder="日">
-                <el-option
-                  v-for="i in day_options"
-                  :key="i"
-                  :label="i"
-                  :value="i"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="上映时间(星期)">
-              <el-select v-model="form.weekday" placeholder="星期">
-                <el-option
-                  v-for="i in weekday_options"
-                  :key="i"
-                  :label="i"
-                  :value="i"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="导演名字">
-              <el-input v-model="form.director" placeholder="导演名字" />
-            </el-form-item>
-            <el-form-item label="主要演员名字">
-              <el-input v-model="form.actor" placeholder="主要演员名字" />
-            </el-form-item>
-            <el-form-item label="参与演员名字">
-              <el-input
-                v-model="form.support_actor"
-                placeholder="参与演员名字"
-              />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submit" :loading="listLoading">
@@ -85,7 +31,6 @@
       <div style="display: flex; justify-content: center; margin: 0 30px">
         <el-table :data="movieData" height="550" stripe style="width: 100%">
           <el-table-column prop="asin" label="商品ID" width="150" />
-          <el-table-column prop="movie" label="所属电影ID" width="150" />
           <el-table-column prop="title" label="电影名称" width="150" />
           <el-table-column prop="y" label="上映年份" width="150" />
           <el-table-column prop="m" label="上映月份" width="150" />
@@ -119,7 +64,7 @@
 </template>
 
 <script>
-import { combine_product } from "@/api/movie";
+import { mysql_movie } from "@/api/movie";
 import Time from "@/components/Time.vue";
 
 export default {
@@ -239,7 +184,7 @@ export default {
       if (this.form.m) params["m"] = this.form.m;
       if (this.form.d) params["d"] = this.form.d;
       if (this.form.weekday) params["weekday"] = this.form.weekday;
-      combine_product(params).then((response) => {
+      mysql_movie(params).then((response) => {
         this.count = response.data.count;
         this.movieData = response.data.data;
         this.dbtime = {

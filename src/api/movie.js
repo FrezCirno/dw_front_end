@@ -1,16 +1,24 @@
 import request from '@/utils/request'
 
-export function combine_query(params) {
+export function combine_product(params) {
   return request({
-    url: '/api/combine',
+    url: '/api/combine/product',
     method: 'get',
     params
   })
 }
 
-export function mysql_query(params) {
+export function mysql_product(params) {
   return request({
-    url: '/api/mysql',
+    url: '/api/mysql/product',
+    method: 'get',
+    params
+  })
+}
+
+export function mysql_movie(params) {
+  return request({
+    url: '/api/mysql/movie',
     method: 'get',
     params
   })
@@ -24,17 +32,17 @@ export function mysql_sql(params) {
   })
 }
 
-export function neo4j_query(params) {
+export function neo4j_product(params) {
   return request({
-    url: '/api/mysql',
+    url: '/api/mysql/product',
     method: 'get',
     params
   })
 }
 
-export function neo4j_close(params) {
+export function neo4j_relation(params) {
   return request({
-    url: '/api/neo4j/close',
+    url: '/api/neo4j/relation',
     method: 'get',
     params
   })
