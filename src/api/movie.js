@@ -8,6 +8,14 @@ export function combine_product(params) {
   })
 }
 
+export function combine_movie(params) {
+  return request({
+    url: '/api/combine/movie',
+    method: 'get',
+    params
+  })
+}
+
 export function mysql_product(params) {
   return request({
     url: '/api/mysql/product',

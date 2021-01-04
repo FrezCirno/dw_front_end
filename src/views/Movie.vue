@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import { mysql_movie } from "@/api/movie";
+import { mysql_movie, combine_movie } from "@/api/movie";
 import Time from "@/components/Time.vue";
 
 export default {
@@ -236,7 +236,7 @@ export default {
       if (this.form.d) params["d"] = this.form.d;
       if (this.form.weekday) params["weekday"] = this.form.weekday;
       if (this.form.season) params["season"] = this.form.season;
-      mysql_movie(params).then((response) => {
+      combine_movie(params).then((response) => {
         this.count = response.data.count;
         this.movieData = response.data.data;
         this.dbtime = {
