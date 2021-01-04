@@ -96,9 +96,9 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'user',
+        path: 'sql',
         component: () => import('@/views/User.vue'),
-        meta: { title: '评论用户查询', icon: 'table' }
+        meta: { title: '任意sql执行', icon: 'table' }
       }
     ]
   },

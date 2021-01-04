@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function combine_any(params) {
+  return request({
+    url: '/api/combine/any',
+    method: 'get',
+    params
+  })
+}
+
 export function combine_product(params) {
   return request({
     url: '/api/combine/product',
@@ -32,9 +40,9 @@ export function mysql_movie(params) {
   })
 }
 
-export function mysql_sql(params) {
+export function mysql_any(params) {
   return request({
-    url: '/api/mysql/sql',
+    url: '/api/mysql/any',
     method: 'get',
     params
   })
@@ -56,9 +64,17 @@ export function neo4j_relation(params) {
   })
 }
 
-export function neo4j_sql(params) {
+export function neo4j_any(params) {
   return request({
-    url: '/api/neo4j/sql',
+    url: '/api/neo4j/any',
+    method: 'get',
+    params
+  })
+}
+
+export function hive_any(params) {
+  return request({
+    url: '/api/hive/any',
     method: 'get',
     params
   })
