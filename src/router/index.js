@@ -73,7 +73,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'movie',
-        component: () => import('@/views/Product.vue'),
+        component: () => import('@/views/Movie.vue'),
         meta: { title: '电影实体查询', icon: 'table' }
       },
     ]

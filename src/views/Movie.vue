@@ -1,12 +1,81 @@
 <template>
   <div id="movie-querier">
     <div class="rule">
-      <h1 style="margin: 55px 30px 20px">电影查询</h1>
+      <h1 style="margin: 55px 30px 20px">电影实体查询</h1>
       <div class="content">
         <div class="myform">
           <el-form ref="form" :model="form" label-width="150px">
+            <el-form-item label="电影id">
+              <el-input v-model="form.asin" placeholder="电影id" />
+            </el-form-item>
             <el-form-item label="电影名称">
               <el-input v-model="form.title" placeholder="电影名称" />
+            </el-form-item>
+            <el-form-item label="电影类别">
+              <el-select v-model="form.genre" multiple placeholder="请选择">
+                <el-option
+                  v-for="item in genre_options"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="上映时间(年月日)">
+              <el-select v-model="form.y" placeholder="年">
+                <el-option
+                  v-for="i in year_options"
+                  :key="i"
+                  :label="i"
+                  :value="i"
+                />
+              </el-select>
+              <el-select v-model="form.season" placeholder="季度">
+                <el-option
+                  v-for="i in season_options"
+                  :key="i"
+                  :label="i"
+                  :value="i"
+                />
+              </el-select>
+              <el-select v-model="form.m" placeholder="月">
+                <el-option
+                  v-for="i in month_options"
+                  :key="i"
+                  :label="i"
+                  :value="i"
+                />
+              </el-select>
+              <el-select v-model="form.d" placeholder="日">
+                <el-option
+                  v-for="i in day_options"
+                  :key="i"
+                  :label="i"
+                  :value="i"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="上映时间(星期)">
+              <el-select v-model="form.weekday" placeholder="星期">
+                <el-option
+                  v-for="i in weekday_options"
+                  :key="i"
+                  :label="i"
+                  :value="i"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="导演名字">
+              <el-input v-model="form.director" placeholder="导演名字" />
+            </el-form-item>
+            <el-form-item label="主要演员名字">
+              <el-input v-model="form.actor" placeholder="主要演员名字" />
+            </el-form-item>
+            <el-form-item label="参与演员名字">
+              <el-input
+                v-model="form.support_actor"
+                placeholder="参与演员名字"
+              />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submit" :loading="listLoading">
@@ -107,39 +176,11 @@ export default {
         "Talk Show  Variety",
         "Erotic",
       ],
-      weekday_options: [1, 2, 3, 4, 5, 6, 7],
-      month_options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      day_options: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-      ],
+      year_options: [],
+      weekday_options: ["", 1, 2, 3, 4, 5, 6, 7],
+      season_options: [],
+      month_options: [],
+      day_options: [],
       form: {
         asin: "",
         title: "",
@@ -161,6 +202,16 @@ export default {
         hive: 100,
       },
     };
+  },
+  created() {
+    this.year_options.push("");
+    for (var i = 1963; i <= 2021; i++) this.year_options.push(i);
+    this.month_options.push("");
+    for (var i = 1; i <= 12; i++) this.month_options.push(i);
+    this.day_options.push("");
+    for (var i = 1; i <= 31; i++) this.day_options.push(i);
+    this.season_options.push("");
+    for (var i = 1; i <= 4; i++) this.season_options.push(i);
   },
   methods: {
     reset() {
@@ -184,6 +235,7 @@ export default {
       if (this.form.m) params["m"] = this.form.m;
       if (this.form.d) params["d"] = this.form.d;
       if (this.form.weekday) params["weekday"] = this.form.weekday;
+      if (this.form.season) params["season"] = this.form.season;
       mysql_movie(params).then((response) => {
         this.count = response.data.count;
         this.movieData = response.data.data;
