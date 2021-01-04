@@ -98,7 +98,7 @@ export const constantRoutes = [
       {
         path: 'sql',
         component: () => import('@/views/User.vue'),
-        meta: { title: '任意sql执行', icon: 'table' }
+        meta: { title: 'SQL执行器', icon: 'table' }
       }
     ]
   },

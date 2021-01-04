@@ -1,7 +1,7 @@
 <template>
   <div id="movie-querier">
     <div class="rule">
-      <h1 style="margin: 55px 30px 20px">评论用户查询</h1>
+      <h1 style="margin: 55px 30px 20px">SQL执行器</h1>
       <div class="content">
         <div class="myform">
           <el-form ref="form" :model="form" label-width="150px">
